@@ -13,7 +13,34 @@ the json then is easyly transaltable, can add new language easily and will manag
 * this will create language file with appropriate language file
 * the setup will create a directory per views, in shich each language will appear as <language>.json
 
+## Example use(generic) : 
 
+````
+	var copydeck = require("copydeck")
+	
+	// set to true to use header and/or footer, leave blank if not
+	var blocks = {
+		filePath: "index",
+		header: true,
+		footer: true
+	};
+	// callback will return languagePack, which contain the header,content,footer and current context language values
+	/**
+		{
+			currentLanguage: <current content language>
+			headerBlock: <header values as object>,
+			contentBlock: <content values as object>,
+			footerBlock: <footer values as object>
+		}
+	*/
+	// they can be then used in many ways, or returned as locales 
+	copydeck.importTextsByLanguage(
+		blocks,
+		function(languagePack) {
+		 // do something...
+		});
+
+````
 
 ## Example use(with express) : 
 

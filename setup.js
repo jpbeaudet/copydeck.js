@@ -125,18 +125,20 @@ program
 	.option('-n, --name [String]', 'name of new page', null)
 	.option('-v, --verbose', 'Set to verbose ')
 	.action(function(options){
-		console.log("*********************************")
-		console.log("*            Copydeck.js        *")
-		console.log("*                               *")
-		console.log("* Author: Jean-Philippe Beaudet *")
-		console.log("* Version: 0.0.1                *")
-		console.log("* License:GPL-3.0               *")
-		console.log("*                               *")
-		console.log("*  Adding new page structure    *")
-		console.log("*                               *")
-		console.log("*            Adding...          *")
-		console.log("*                               *")
-		console.log("*********************************")
+		if (VERBOSE){
+			console.log("*********************************")
+			console.log("*            Copydeck.js        *")
+			console.log("*                               *")
+			console.log("* Author: Jean-Philippe Beaudet *")
+			console.log("* Version: 0.0.1                *")
+			console.log("* License:GPL-3.0               *")
+			console.log("*                               *")
+			console.log("*  Adding new page structure    *")
+			console.log("*                               *")
+			console.log("*            Adding...          *")
+			console.log("*                               *")
+			console.log("*********************************")
+		}
 		if(!options.name  || options.name == ""){
 			console.log("ERROR: you must specify a name for the new page, which you will use as filePath in your route")
 			return;
