@@ -1,15 +1,19 @@
 # copydeck.js
 Language tool for web application built with nodejs 
 
+The purpose is to create json file representing the copydeck of the webb application, then to retreive automatically the language files from the json file using a language context cookie or variable.
+the json then is easyly transaltable, can add new language easily and will manage language without the ned to copy pages more than once. 
+
 ## Installation:
 
-````
-npm install 
-set the config file
-run the setup.js (setup generate -v)  command-line tool to set up language structure
-this will create language file with appropriate language file
 
-````
+* npm install 
+* set the config file
+* run the setup.js (setup generate -v)  command-line tool to set up language structure
+* this will create language file with appropriate language file
+* the setup will create a directory per views, in shich each language will appear as <language>.json
+
+
 
 ## Example use(with express) : 
 

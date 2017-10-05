@@ -8,7 +8,7 @@
     "url": "https://github.com/jpbeaudet/copydeck.js"
   },
   "keywords": [
-    "language",
+    "language"
   ],
   "authors": "Jean-Philippe Beaudet <jpbeaudet@s3r3nity.com> ",
   "copyright": "Jean-Philippe Beaudet <jpbeaudet@s3r3nity.com> ",
@@ -16,6 +16,7 @@
     "morgan": "",
     "path": "",
     "cookies": "0.7.1",
-    "commander": "2.11.0"
+    "commander": "2.11.0",
+    "jsonfile": "4.0.0"
   }
 }
