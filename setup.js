@@ -125,6 +125,7 @@ program
 	.option('-n, --name [String]', 'name of new page', null)
 	.option('-v, --verbose', 'Set to verbose ')
 	.action(function(options){
+		VERBOSE = (options.verbose != null)
 		if (VERBOSE){
 			console.log("*********************************")
 			console.log("*            Copydeck.js        *")
