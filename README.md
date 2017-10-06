@@ -13,77 +13,49 @@ the json then is easyly transaltable, can add new language easily and will manag
 * this will create language file with appropriate language file
 * the setup will create a directory per views, in shich each language will appear as <language>.json
 
-## Example use(generic) : 
-
-````
-	var copydeck = require("copydeck")
-	
-	// set to true to use header and/or footer, leave blank if not
-	var options = {
-		filePath: "index",
-		header: true,
-		footer: true
-	};
-	// callback will return languagePack, which contain the header,content,footer and current context language values
-	/**
-		{
-			currentLanguage: <current content language>
-			headerBlock: <header values as object>,
-			contentBlock: <content values as object>,
-			footerBlock: <footer values as object>
-		}
-	*/
-	// they can be then used in many ways, or returned as locales 
-	copydeck.importTextsByLanguage(
-		options,
-		function(languagePack) {
-		 // do something...
-		});
-
-````
 
 ## Example use(with express) : 
 
 ````
 var express = require('express');
 var http = require('http');
-var copydeck = require("copydeck")
 var app = express();
+var copydeck = require("../../index.js");
 
-server = http.createServer( function( req, res ) {
+app.use(function (req, res, next) {
+  copydeck.cookies(req, res)
+  next();
+});
 
-app.get('/',  function (req, res) {
-	// set to true to use header and/or footer, leave blank if not
+app.get('/', function (req, res) {
 	var options = {
 		filePath: "index",
 		header: true,
 		footer: true
 	};
-	
-	var callback = function (languagePack) {
-		var data = {
-			currentLanguage: languagePack.lang
-			headerBlock: languagePack.headerBlock,
-			contentBlock: languagePack.contentBlock,
-			footerBlock: languagePack.footerBlock
-		};
-		res.render('somePage', data);
-	};
-	
-	copydeck.importTextsByLanguage(
-		options,
-		callback
-	);
-}
+	copydeck.importTextsByLanguage(options, function(languagePack) {
+		var nextLanguage;
+		if (languagePack.currentLanguage == "en"){
+			nextLanguage = "fr"
+		}else{
+			nextLanguage = "en"
+		}
+		res.send('<div><a href="/switch?language='+nextLanguage+'">'+languagePack.contentBlock.switchLanguage+'</a><br><p>'+languagePack.contentBlock.helloWorld+'!</p></div>')
+	});
+})
 
-app.get('/updateLanguage',  function (req, res) {
+app.get('/switch', function (req, res) {
 	var language = req.query.language || req.params.language || req.sessions.language
-	copydeck.updateGuestLanguage(language)
-	res.redirect("somewhere")
-}
+	copydeck.updateGuestLanguage(language, function(){
+		res.redirect("/")
+	})
+	
+})
 
-}
-server.listen(3000)
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
+
  
 ````
  

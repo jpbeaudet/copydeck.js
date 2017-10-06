@@ -14,32 +14,35 @@
 var Cookies = require( "cookies" )
 var config = require("./config.js")
 var fs = require('fs-extra');       //File System - for file manipulation
-
+var cookies;
 // Main Module
 /////////////////////////////////////////////
 module.exports = {
-	self: this,
-	lang: self.getGuestLanguage(),
+	cookies :function(req, res){ cookies = new Cookies( req, res )},
 	// set lang context attribute
-	getGuestLanguage: function  () { 
+	getGuestLanguage: function() { 
 		if(cookies.get( "lang" )) {
-			self.lang = cookies.get( "lang" );
+			return cookies.get( "lang" );
 		}
 		else {
-			self.lang = config.langDefault;
+			return config.langDefault;
 		}
 	},
-	updateGuestLanguage: function  (lang, callback) { 
+	lang: function(){
+		return this.getGuestLanguage()
+		},
+	updateGuestLanguage: function(lang, callback) { 
 		cookies
 			.set( "lang", lang, { httpOnly: false } )
 		callback()
 	},
 	// import language json files based on querystring
-	importTextsByLanguage: function  (options, callback) {
-		var pathHeaderBlock = './languages/header/' + self.lang + '.json',
-			pathContentBlock =  './languages/' + options.filePath +
-					'/' + self.lang + '.json',
-			pathFooterBlock = './languages/footer/' + self.lang + '.json',      
+	importTextsByLanguage: function(options, callback) {
+		var self = this;
+		var pathHeaderBlock = './language/header/' + self.lang() + '.json',
+			pathContentBlock =  './language/' + options.filePath +
+					'/' + self.lang() + '.json',
+			pathFooterBlock = './language/footer/' + self.lang()+ '.json',      
 			headerBlock,
 			contentBlock,
 			footerBlock = {};
@@ -47,7 +50,7 @@ module.exports = {
 			
 		// if set to true, import the header languagepack
 		function importHeader() {
-			fs.readJson(pathHeaderBlock, 'utf8', function (err, file) {
+			fs.readJson(pathHeaderBlock, 'utf8', function(err, file) {
 				if (err) {
 					throw err;
 				}
@@ -65,7 +68,7 @@ module.exports = {
 				contentBlock = file;
 				options.hasOwnProperty('footer') ? importFooter() : callback(
 				{
-					currentLanguage: self.lang,
+					currentLanguage: self.lang(),
 					headerBlock: headerBlock,
 					contentBlock: contentBlock
 				});
@@ -81,7 +84,7 @@ module.exports = {
 				footerBlock = file;
 				
 				callback({
-					currentLanguage: self.lang,
+					currentLanguage: self.lang(),
 					headerBlock: headerBlock,
 					contentBlock: contentBlock,
 					footerBlock: footerBlock

@@ -1,5 +1,5 @@
 {
-  "name": "copydeck.js",
+  "name": "copydeck.js html-node example",
   "version": "1.0.0",
   "description": "language tool for wepapp in nodejs",
   "main": "index.js",
@@ -18,7 +18,6 @@
     "cookies": "0.7.1",
     "commander": "2.11.0",
     "jsonfile": "4.0.0",
-    "express": "",
-    "fs-extra": ""
+    "express": ""
   }
 }
