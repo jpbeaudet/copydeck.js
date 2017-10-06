@@ -27,35 +27,42 @@ var PATH = config.appPath
 /////////////////////////////////////////////////////////////////
 
 function generate(paths, cb){
+	var basePath;
 	fs.mkdir(PATH+'/language', function (err) {
 		if (err) {
 			console.error(err);
 		} 
+		paths.push("header")
+		paths.push("footer")
 		for (var i = 0; i < paths.length; i++) {
 			if (VERBOSE){ 
 				console.log("generate "+paths[i])
 			}
-			var basePath = PATH+'/language/'+paths[i]
-			fs.mkdir(PATH+'/language/'+paths[i], function (err) {
+			basePath = PATH+'/language/'+paths[i]
+			console.log("generate basePath "+basePath)
+			_writePath(basePath)
+			if (i == paths.length-1){
+				cb(null)
+			}
+		}
+		
+	});
+}
+function _writePath(basePath){
+			fs.mkdir(basePath, function (err) {
 				if (err) {
 					console.error(err);
 				} 
-				
-				for (var x = 0; x < config.languages.length; x++) { 
+				for (var x = 0; x < config.languages.length; x++) {
+					
 					var lang = config.languages[x]
-					jsonfile.writeFile(basePath+"/"+lang+'.json', {path: basePath+"/"+lang+'.json'}, err => {
+					console.log("sub-generate "+basePath+ " "+lang) 
+					jsonfile.writeFile(basePath+"/"+lang+'.json', {path: path.normalize(basePath)+"/"+lang+'.json'}, err => {
 						if (err) return console.error(err)
-						if (VERBOSE){ 
-							console.log('success! '+basePath+" for language: "+lang)
-						}
 					})
 				}
 			})
-		}
-		cb(null)
-	});
 }
-
 function addPage(path, cb){
 	if (VERBOSE){ 
 		console.log("generate "+path)
