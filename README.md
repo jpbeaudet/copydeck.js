@@ -19,7 +19,7 @@ the json then is easyly transaltable, can add new language easily and will manag
 	var copydeck = require("copydeck")
 	
 	// set to true to use header and/or footer, leave blank if not
-	var blocks = {
+	var options = {
 		filePath: "index",
 		header: true,
 		footer: true
@@ -35,7 +35,7 @@ the json then is easyly transaltable, can add new language easily and will manag
 	*/
 	// they can be then used in many ways, or returned as locales 
 	copydeck.importTextsByLanguage(
-		blocks,
+		options,
 		function(languagePack) {
 		 // do something...
 		});
@@ -54,7 +54,7 @@ server = http.createServer( function( req, res ) {
 
 app.get('/',  function (req, res) {
 	// set to true to use header and/or footer, leave blank if not
-	var blocks = {
+	var options = {
 		filePath: "index",
 		header: true,
 		footer: true
@@ -71,7 +71,7 @@ app.get('/',  function (req, res) {
 	};
 	
 	copydeck.importTextsByLanguage(
-		blocks,
+		options,
 		callback
 	);
 }

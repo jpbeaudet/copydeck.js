@@ -35,15 +35,15 @@ module.exports = {
 		callback()
 	},
 	// import language json files based on querystring
-	importTextsByLanguage: function  (blocks, callback) {
+	importTextsByLanguage: function  (options, callback) {
 		var pathHeaderBlock = './languages/header/' + self.lang + '.json',
-			pathContentBlock =  './languages/' + blocks.filePath +
+			pathContentBlock =  './languages/' + options.filePath +
 					'/' + self.lang + '.json',
 			pathFooterBlock = './languages/footer/' + self.lang + '.json',      
 			headerBlock,
 			contentBlock,
 			footerBlock = {};
-			blocks.hasOwnProperty('header') ? importHeader(): importContent();
+			options.hasOwnProperty('header') ? importHeader(): importContent();
 			
 		// if set to true, import the header languagepack
 		function importHeader() {
@@ -63,7 +63,7 @@ module.exports = {
 					throw err;
 				}
 				contentBlock = file;
-				blocks.hasOwnProperty('footer') ? importFooter() : callback(
+				options.hasOwnProperty('footer') ? importFooter() : callback(
 				{
 					currentLanguage: self.lang,
 					headerBlock: headerBlock,
